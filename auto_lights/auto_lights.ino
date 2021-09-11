@@ -8,6 +8,7 @@
  */
 
 
+#include "lights.h"
 #include <Wire.h>
 #include "RTClib.h" // Real time clock
 RTC_DS3231 RTC;
@@ -42,10 +43,9 @@ void setup()
   pinMode(13, OUTPUT);
   digitalWrite(13, LOW);
 
-  // Controller pin
-  // Turn off by default
-  pinMode(12, OUTPUT); 
-  digitalWrite(12, HIGH);
+  // Controller pin 12
+  // Turn on by low but now turn it off (it's default)
+  Lights lights = Lights(12, LOW);
 
   // Init RTC
   Wire.begin();
