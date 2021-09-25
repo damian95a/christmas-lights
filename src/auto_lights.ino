@@ -41,7 +41,7 @@ void setup()
   //print_tim();
   
   // following line sets the RTC to the date & time this sketch was compiled
-  RTC.adjust(DateTime(__DATE__, __TIME__)); // Uncomment to set the clock
+  //RTC.adjust(DateTime(__DATE__, __TIME__)); // Uncomment to set the clock
 }
 
 void loop()
