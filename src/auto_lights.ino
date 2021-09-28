@@ -6,6 +6,7 @@
 
 
 #include "lights.h"
+#include "calendar.h"
 #include <Wire.h>
 #include "RTClib.h" // Real time clock
 RTC_DS3231 RTC;
@@ -17,7 +18,7 @@ int hours, minutes, sec, day_n, mon_n, year_n; // Time variables
 // Controller pin 12
 // Turn on by low but now turn it off (it's default state)
 Lights lights_ctrl = Lights(12, LOW);
-
+Calendar<short> cal = Calendar<short>(2021,4);
 
 
 
@@ -27,6 +28,8 @@ void print_tim(); // debug
 
 void setup()
 {
+  cal.fill_cal();
+  cal.print_cal();
   // Turn off diode at pin no. 13 (to save energy)
   pinMode(13, OUTPUT);
   digitalWrite(13, LOW);
