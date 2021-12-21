@@ -1,20 +1,10 @@
 #include "simplevector.h"
 
 template <typename T>
-SimpleVector<T>::SimpleVector(int n){
-  // alloc an array
-  
-  s = n; // set size
-  elem = new T[n]; // alloc array
-}
+SimpleVector<T>::SimpleVector(int n) : s(n) {}
 
 template <typename T>
-SimpleVector<T>::SimpleVector(int n, T val){
-  // alloc an array
-  // and init it
-  
-  s = n; // set size
-  elem = new T[n]; // alloc array
+SimpleVector<T>::SimpleVector(int n, T val) : s(n), elem(new T[n]){
 
   for(auto p=elem; p<elem+s; ++p){
     *p = val;
@@ -37,10 +27,18 @@ void SimpleVector<T>::push_back(const T& value){
   tmp[s] = value;
   s+=1;
 
+/*  Serial.begin(9600);
+  Serial.println(tmp-elem);
+  Serial.end();*/
+
   // if elem has been empty before
   // remove previous array
   if (s>1)
     delete[] elem;
+
+  /*Serial.begin(9600);
+  Serial.println(tmp-elem);
+  Serial.end();*/
 
   // assign temporary array as the vector
   elem = tmp;
@@ -48,7 +46,7 @@ void SimpleVector<T>::push_back(const T& value){
 }
 
 template <typename T>
-void SimpleVector<T>::push_back(const T&& value){
+void SimpleVector<T>::push_back(T&& value){
   // add element at the end
   // (reference to the temporary value)
 

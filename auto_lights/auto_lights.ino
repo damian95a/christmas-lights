@@ -4,32 +4,25 @@
  *  Arduino 5V
  */
 
-
 #include "lights.h"
 #include "calendar.h"
 #include <Wire.h>
 #include "RTClib.h" // Real time clock
 RTC_DS3231 RTC;
 
-bool on_off = false; // State of the light
+void readTime();
+void lState(); // Turn on/off lights on time
+void print_tim(); // debug
 
 int hours, minutes, sec, day_n, mon_n, year_n; // Time variables
 
 // Controller pin 12
 // Turn on by low but now turn it off (it's default state)
 Lights lights_ctrl = Lights(12, LOW);
-Calendar<short> cal = Calendar<short>(2021,4);
-
-
-
-void readTime();
-void lState(); // Turn on/off lights on time
-void print_tim(); // debug
+Calendar<short> cal;
 
 void setup()
 {
-  cal.fill_cal();
-  cal.print_cal();
   // Turn off diode at pin no. 13 (to save energy)
   pinMode(13, OUTPUT);
   digitalWrite(13, LOW);
@@ -37,14 +30,24 @@ void setup()
   // Init RTC
   Wire.begin();
   RTC.begin();
-
   readTime();
+
+  Serial.begin(9600);
+  while(!Serial.available());
+  int tmp = Serial.readStringUntil('\n').toInt();
+  Serial.println(tmp);
+  Serial.end();
+  
+  cal = Calendar<short>(tmp,4);
+
+  cal.fill_cal();
+  cal.print_cal();
 
   // debug
   //print_tim();
   
   // following line sets the RTC to the date & time this sketch was compiled
-  //RTC.adjust(DateTime(__DATE__, __TIME__)); // Uncomment to set the clock
+  RTC.adjust(DateTime(__DATE__, __TIME__)); // Uncomment to set the clock
 }
 
 void loop()
@@ -52,24 +55,13 @@ void loop()
   // Get time now
   readTime();
 
-  
-   /* //test
-  if(hours == 18)
-    on_off = true;*/
-
-
   // Turn on every day in December
-  if (day_n >= 24 && mon_n == 12) {
-    lState();
-  }
-
   // Turn on every day until 06.01 (Three Kings' Day)
   // Then only wheekends
   // !!!In this version it is necessary to SET IT MANUALLY!!!
-  if ((day_n < 7 || day_n == 12 || day_n == 11 || day_n == 19 || day_n == 18 || day_n == 25 || day_n == 26) && mon_n == 1) {
+  if (cal.check_date(day_n, mon_n)) {
     lState();
   }
-
 
   delay(12000); // change if doesn't work
 }

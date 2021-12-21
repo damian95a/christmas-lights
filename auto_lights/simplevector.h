@@ -9,7 +9,7 @@ class SimpleVector{
 
   public:
   // Empy vector
-  SimpleVector(){s=0; elem=nullptr;}
+  SimpleVector(): s(0), elem(nullptr){}
   // n-element vector
   SimpleVector(int n);
   // fill n-element vector
@@ -17,7 +17,7 @@ class SimpleVector{
 
   // Add element at the end
   void push_back(const T& value);
-  void push_back(const T&& value);
+  void push_back(T&& value);
   
   // Remove the last element
   // and return its value
@@ -35,7 +35,7 @@ class SimpleVector{
   bool is_empty() const;
   
   // free the memory
-  ~SimpleVector(){s = 0; delete[] elem;}
+  ~SimpleVector(){s = 0; free(elem);}
 };
 
 #endif

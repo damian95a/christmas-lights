@@ -1,7 +1,5 @@
+#pragma once
 #include "simplevector.h"
-
-#ifndef CALENDAR_H
-#define CALENDAR_H
 
 template <typename T>
 struct date{
@@ -19,11 +17,12 @@ class Calendar : private SimpleVector<date<T>>{
   T day_n(T d, T m, T y) const;
 
   public:
+  Calendar() = default;
   Calendar(T y) : year{y}{}
   Calendar(T y, int siz) : year{y}, SimpleVector<date<T>>(siz){}
 
   void fill_cal();
   void print_cal() const;
-};
 
-#endif
+  bool check_date(T _day, T _mon) const;
+};
