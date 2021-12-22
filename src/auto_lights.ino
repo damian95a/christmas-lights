@@ -18,7 +18,7 @@ void readTime(); // save time to global variables
 void lState(); // Turn on/off lights on time
 void print_tim(); // debug
 
-short hours, minutes, sec, day_n, mon_n, year_n; // Time variables
+short hours, minutes, day_n, mon_n, year_n; // Time variables
 
 // Controller pin 12
 // Turn on by low but now turn it off (it's default state)
@@ -73,7 +73,6 @@ void readTime(){
 
   hours = now.hour();
   minutes = now.minute();
-  sec = now.second();
 
   day_n = now.day();
   mon_n = now.month();
@@ -93,9 +92,10 @@ void print_tim(){
   Serial.print(hours);
   Serial.print(":");
   Serial.print(minutes);
-  Serial.print(":");
-  Serial.print(sec);
+
   Serial.print("_");
-  Serial.println(day_n);
+  Serial.print(day_n);
+  Serial.print(".");
+  Serial.println(mon_n);
   Serial.end();
 }
