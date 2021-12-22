@@ -1,8 +1,8 @@
 #include "calendar.h"
 
-// algorytm działa tylko dla stycznia i lutego!!!
-// więc się nie ciesz na zapas
-// tu trzebaby dodać 1 do roku, bo f. wykona się rok wczesniej niz bedzie potrzebna
+// !!!This algorithm is optimalized espetially for January and February!!!
+// It doesn't work for other months
+// We adds 1 to year number, because this fun will be called at the beginning of the winter (we need it after New Year)
 template <typename T>
 T Calendar<T>::day_n(T d, T m, T y) const {
   // it is an algorithm to find day of week, that is optimalized for January and February
@@ -31,10 +31,10 @@ T Calendar<T>::day_n(T d, T m, T y) const {
 template <typename T>
 void Calendar<T>::fill_cal(){
   // this function make a list of Sundays and Saturnadys between 07.01 and 01.02
-  T day, tmp, jan6;
-  jan6 = day_n(6,1, year+1); // it is a temporary var, that will be used to find first Saturday (or Sunday) after 06.01
+  T day, tmp;
+  tmp = day_n(6,1, year+1); // it is a temporary var, that will be used to find first Saturday (or Sunday) after 06.01
   
-  tmp=6-jan6;
+  tmp=6-tmp;
   if(!tmp) tmp=1;
    
   // set first day to check
@@ -96,6 +96,7 @@ void Calendar<T>::fill_cal(){
     day+=7;
   }
 
+  // add 02.02 at the end
   push_back((date<T>){2,2});
 }
 
@@ -123,9 +124,9 @@ template <typename T>
 bool Calendar<T>::check_date(T _day, T _mon) const {
   for(auto p=begin(); p<end(); ++p){
     if(p->day == _day && p->month == _mon){
-      return true;
+      return true; // true if any from list matches
     }
   }
 
-  return false;
+  return false; // false if none from list matches
 }

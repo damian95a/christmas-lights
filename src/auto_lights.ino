@@ -18,6 +18,7 @@ void readTime(); // save time to global variables
 void lState(); // Turn on/off lights on time
 void print_tim(); // debug
 
+
 short hours, minutes, day_n, mon_n, year_n; // Time variables
 
 // Controller pin 12
@@ -60,6 +61,8 @@ void loop()
     lState();
   }
 
+  // it is to not chceck all the time
+  // we need minutes, not seconds
   delay(12000); // change if doesn't work
 }
 

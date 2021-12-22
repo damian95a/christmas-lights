@@ -8,8 +8,25 @@ class Lights{
   short pin;
 
   public:
+  /**
+   * state to ON is LOW
+   * default pin is 13
+   * default it is OFF
+   */
   Lights();
+
+  /**
+   * state to ON is LOW
+   * default pin is p
+   * default it is OFF
+   */
   Lights(short p);
+
+  /**
+   * state to ON is on_ver
+   * default pin is p
+   * default it is OFF
+   */
   Lights(short p, bool on_ver);
 
   // returns current lights state
