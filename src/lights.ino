@@ -30,6 +30,8 @@ Lights::Lights(short p, bool on_ver){
   ON = on_ver; // set turn on state
   pin = p;  // set pin number
 
+  pinMode(pin, OUTPUT);
+
   // turn off by dafault
   turn_off();
 }
