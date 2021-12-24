@@ -8,18 +8,22 @@
 #include "calendar.h"
 #include <Wire.h>
 #include "RTClib.h" // Real time clock
+
+// turn lights on every day 24.12-06.01
+#define CHRISTMAS(d, m) (((m)==12 && (d)>=24) || ((m)==1 && (d)<=6))
+
 RTC_DS3231 RTC;
 
-void readTime();
+void readTime(); // save time to global variables
 void lState(); // Turn on/off lights on time
 void print_tim(); // debug
 
-int hours, minutes, sec, day_n, mon_n, year_n; // Time variables
+short hours, minutes, sec, day_n, mon_n, year_n; // Time variables
 
 // Controller pin 12
 // Turn on by low but now turn it off (it's default state)
 Lights lights_ctrl = Lights(12, LOW);
-Calendar<short> cal;
+Calendar<short> cal; // save dates as short variables
 
 void setup()
 {
@@ -30,24 +34,18 @@ void setup()
   // Init RTC
   Wire.begin();
   RTC.begin();
-  readTime();
-
-  Serial.begin(9600);
-  while(!Serial.available());
-  int tmp = Serial.readStringUntil('\n').toInt();
-  Serial.println(tmp);
-  Serial.end();
-  
-  cal = Calendar<short>(tmp,4);
-
-  cal.fill_cal();
-  cal.print_cal();
-
-  // debug
-  //print_tim();
-  
   // following line sets the RTC to the date & time this sketch was compiled
   RTC.adjust(DateTime(__DATE__, __TIME__)); // Uncomment to set the clock
+  
+  readTime();
+
+  
+  cal = Calendar<short>(year_n, 4); // initialize callendar
+  cal.fill_cal(); // calculate weekends in January (February)
+  cal.print_cal(); // print the weekends for debug
+
+  // debug
+  print_tim();
 }
 
 void loop()
@@ -58,8 +56,7 @@ void loop()
   // Turn on every day in December
   // Turn on every day until 06.01 (Three Kings' Day)
   // Then only wheekends
-  // !!!In this version it is necessary to SET IT MANUALLY!!!
-  if (cal.check_date(day_n, mon_n)) {
+  if (CHRISTMAS(day_n, mon_n) || cal.check_date(day_n, mon_n)) {
     lState();
   }
 
@@ -71,6 +68,7 @@ void loop()
 
 
 void readTime(){
+  // sign time to global variables
   DateTime now = RTC.now();// Getting the current Time and storing it into a DateTime object
 
   hours = now.hour();
