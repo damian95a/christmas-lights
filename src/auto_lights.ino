@@ -85,8 +85,8 @@ void readTime(){
 void lState(){
   // Turn on/off lights on time
   if (hours == 16 && minutes == 0) lights_ctrl.turn_on(); // Turn on at 16:00
-  if ((hours == 23 && minutes == 0) && !(day_n == 24 && mon_n == 12)) lights_ctrl.turn_off();  // Turn off at 23:00 if today is not 24.12
-  if ((day_n == 25 && mon_n == 12) && (hours == 2 && minutes == 0)) lights_ctrl.turn_off(); // Turn off if 2:00 if today is 25.12 (night after 24.12)
+  if ((hours == 23 && minutes == 0) && !((day_n == 24 || day_n == 31) && mon_n == 12)) lights_ctrl.turn_off();  // Turn off at 23:00 if today is not 24.12/31.12
+  if (((day_n == 25 && mon_n == 12) || (day_n == 1 && mon_n == 1)) && (hours == 2 && minutes == 0)) lights_ctrl.turn_off(); // Turn off if 2:00 and today is 25.12 of 01.01 (night after 24.12/31.12)
 }
 
 void print_tim(){
