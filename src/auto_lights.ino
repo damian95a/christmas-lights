@@ -5,7 +5,7 @@
  */
 
 #include "lights.h"
-#include "calendar.h"
+#include "schedule.h"
 #include <Wire.h>
 #include "RTClib.h" // Real time clock
 
@@ -24,7 +24,7 @@ short hours, minutes, day_n, mon_n, year_n; // Time variables
 // Controller pin 12
 // Turn on by low but now turn it off (it's default state)
 Lights lights_ctrl = Lights(12, LOW);
-Calendar<short> cal; // save dates as short variables
+Schedule<short> cal; // save dates as short variables
 
 void setup()
 {
@@ -36,14 +36,13 @@ void setup()
   Wire.begin();
   RTC.begin();
   // following line sets the RTC to the date & time this sketch was compiled
-  //RTC.adjust(DateTime(__DATE__, __TIME__)); // Uncomment to set the clock
+  // RTC.adjust(DateTime(__DATE__, __TIME__)); // Uncomment to set the clock
   
   readTime();
 
   
-  cal = Calendar<short>(year_n, 4); // initialize callendar
-  cal.fill_cal(); // calculate weekends in January (February)
-  cal.print_cal(); // print the weekends for debug
+  cal = Schedule<short>(year_n, mon_n); // initialize callendar
+  cal.print(); // print the weekends for debug
 
   // debug
   print_tim();
@@ -96,9 +95,11 @@ void print_tim(){
   Serial.print(":");
   Serial.print(minutes);
 
-  Serial.print("_");
+  Serial.print(" ");
   Serial.print(day_n);
   Serial.print(".");
-  Serial.println(mon_n);
+  Serial.print(mon_n);
+  Serial.print(".");
+  Serial.println(year_n);
   Serial.end();
 }
