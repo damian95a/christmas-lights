@@ -12,7 +12,7 @@
 // turn lights on every day 24.12-06.01
 #define CHRISTMAS(d, m) (((m)==12 && (d)>=24) || ((m)==1 && (d)<=6))
 
-RTC_DS3231 RTC;
+RTC_DS1307 RTC;
 
 void readTime(); // save time to global variables
 void lState(); // Turn on/off lights on time
