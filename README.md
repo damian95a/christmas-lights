@@ -5,4 +5,10 @@ The program automatically calculates dates when the lights should on. Here has b
 The lights turn on every day between 24.12 and 06.12. After that date thay turn on only in weekends (Saturdays and Sundays) before 02.02 - then are on for the last time, even if this is not weekend.
 \
 \
+Debugging with UATR:
+* RTC commands: time - prints current time & date, start time debug - prints time every second, stop time debug - ends printing,
+* relay state command: state - prints ON or OFF,
+* generated calendar: schedule - prints dates in the schedule.
+\
+\
 ![1640961329791](https://user-images.githubusercontent.com/79938517/147828988-128335fd-c6b5-4211-b972-8eed73cbf561.jpg)
