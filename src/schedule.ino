@@ -49,7 +49,6 @@ void Schedule<T>::fill_sch(T year){
 
   int i=0;
   for(; i<BASIC_SIZE; ++i){
-    Serial.println(i);
     if(day == 32){
       sch[i] = {1, 2};
       break;
@@ -74,8 +73,7 @@ void Schedule<T>::fill_sch(T year){
 
 template <typename T>
 void Schedule<T>::print() const{
-  Serial.begin(9600);
-
+  Serial.println("Schedule:");
   for(int i=0; i < size; ++i){
       T d = sch[i].day;
       T m = sch[i].month;
@@ -90,7 +88,8 @@ void Schedule<T>::print() const{
       
   }
 
-  Serial.end();
+  Serial.print("Size: ");
+  Serial.println(size);
 }
 
 template <typename T>

@@ -30,7 +30,7 @@ class Lights{
   Lights(short p, bool on_ver);
 
   // returns current lights state
-  bool get_state() const {return state;}
+  bool get_state() const {return state==ON;}
   
   // better not to use set_state()
   // you should choose turn_on() or turn_off()
