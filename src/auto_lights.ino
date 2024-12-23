@@ -97,7 +97,7 @@ void serialEvent(){
     Serial.println("stop time debug");
     Serial.println("time");
     Serial.println("state");
-    Serial.println("scheduleg");
+    Serial.println("schedule");
   } else {
     Serial.println("Unknown command\nTry 'help'");
   }
