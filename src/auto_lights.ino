@@ -92,8 +92,14 @@ void serialEvent(){
     Serial.println(lights_ctrl.get_state() ? "ON" : "OFF");
   } else if(c == "schedule"){
     cal.print();
+  } else if(c == "help") {
+    Serial.println("start time debug");
+    Serial.println("stop time debug");
+    Serial.println("time");
+    Serial.println("state");
+    Serial.println("scheduleg");
   } else {
-    Serial.println("Unknown command");
+    Serial.println("Unknown command\nTry 'help'");
   }
 }
 ////////////////////////////STOP////////////////////////////
